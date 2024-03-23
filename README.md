@@ -2,4 +2,4 @@
 
 ### Examples
 
-- [Use of Delegates](https://www.example.com)
+- [Use of Delegates](https://www.example.com](https://github.com/lijotech/CSharpCodeExamples/tree/main/DelegatesInCSharp)https://github.com/lijotech/CSharpCodeExamples/tree/main/DelegatesInCSharp)
