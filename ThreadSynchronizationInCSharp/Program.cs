@@ -4,6 +4,9 @@ using System.Threading;
 class Program
 {
     private static Mutex mutex = new Mutex();
+    // Create a semaphore that can satisfy up to three concurrent requests.
+    private static Semaphore _semaphorePool = new Semaphore(0, 3);
+
     static void Main(string[] args)
     {
         // Create new instances of Account for lock and Monitor examples
@@ -40,6 +43,27 @@ class Program
             Thread newThread = new Thread(new ThreadStart(MutexWorker));
             newThread.Start();
         }
+
+        // Create and start five numbered threads for Semaphore example.
+        for (int i = 0; i < 5; i++)
+        {
+            Thread t = new Thread(new ParameterizedThreadStart(SemaphoreWorker));
+            t.Start(i);
+        }
+        Thread.Sleep(500);
+        Console.WriteLine("Main thread calls Release(3).");
+        _semaphorePool.Release(3);
+        Console.WriteLine("Main thread exits.");
+
+    }
+
+    private static void SemaphoreWorker(object num)
+    {
+        _semaphorePool.WaitOne();
+        Console.WriteLine("Thread {0} enters the semaphore", num);
+        Thread.Sleep(1000 + (int)num * 1000);
+        Console.WriteLine("Thread {0} releases the semaphore", num);
+        _semaphorePool.Release();
     }
 
     private static void MutexWorker()
