@@ -3,6 +3,7 @@ using System.Threading;
 
 class Program
 {
+    private static Mutex mutex = new Mutex();
     static void Main(string[] args)
     {
         // Create new instances of Account for lock and Monitor examples
@@ -32,6 +33,22 @@ class Program
         {
             threadsMonitor[i].Start();
         }
+
+        //Start the threads for Mutex
+        for (int i = 0; i < 4; i++)
+        {
+            Thread newThread = new Thread(new ThreadStart(MutexWorker));
+            newThread.Start();
+        }
+    }
+
+    private static void MutexWorker()
+    {
+        mutex.WaitOne(); // Request ownership of the mutex.
+        Console.WriteLine("Thread {0} has entered the critical section of Mutex", Thread.CurrentThread.ManagedThreadId);
+        Thread.Sleep(1000); // Simulate some work.
+        Console.WriteLine("Thread {0} is leaving the critical section of Mutex", Thread.CurrentThread.ManagedThreadId);
+        mutex.ReleaseMutex(); // Release the mutex.
     }
 }
 
