@@ -1,11 +1,13 @@
-﻿using System;
-using System.Threading;
-
-class Program
+﻿class Program
 {
     private static Mutex mutex = new Mutex();
     // Create a semaphore that can satisfy up to three concurrent requests.
     private static Semaphore _semaphorePool = new Semaphore(0, 3);
+
+    static ReaderWriterLockSlim _rw = new ReaderWriterLockSlim();
+    static int resource = 0;
+    //This is added to ensure that write operation finishes before read
+    static ManualResetEvent signal = new ManualResetEvent(false);
 
     static void Main(string[] args)
     {
@@ -13,6 +15,7 @@ class Program
         AccountLock accountLock = new AccountLock(1000);
         AccountMonitor accountMonitor = new AccountMonitor(1000);
 
+        #region Lock
         // Start the threads for lock example
         Thread[] threadsLock = new Thread[10];
         for (int i = 0; i < 10; i++)
@@ -24,7 +27,9 @@ class Program
         {
             threadsLock[i].Start();
         }
+        #endregion
 
+        #region Monitor
         // Start the threads for Monitor example
         Thread[] threadsMonitor = new Thread[10];
         for (int i = 0; i < 10; i++)
@@ -36,14 +41,31 @@ class Program
         {
             threadsMonitor[i].Start();
         }
+        #endregion
 
+        #region Mutex
         //Start the threads for Mutex
         for (int i = 0; i < 4; i++)
         {
             Thread newThread = new Thread(new ThreadStart(MutexWorker));
             newThread.Start();
         }
+        #endregion
 
+        #region ReaderWriterLockSlim
+        // Start a new thread that will write the data and read it after writing.
+        Thread t1 = new Thread(new ThreadStart(Write));
+        t1.Start();
+        // Start a new thread that will read the data.
+        Thread t2 = new Thread(new ThreadStart(Read));
+        t2.Start();
+        // Wait for the two threads to finish.
+        t1.Join();
+        t2.Join();
+        #endregion
+
+
+        #region Semaphore
         // Create and start five numbered threads for Semaphore example.
         for (int i = 0; i < 5; i++)
         {
@@ -51,10 +73,60 @@ class Program
             t.Start(i);
         }
         Thread.Sleep(500);
-        Console.WriteLine("Main thread calls Release(3).");
+        Console.WriteLine("Main thread calls Release(3) Semaphore.");
         _semaphorePool.Release(3);
         Console.WriteLine("Main thread exits.");
+        #endregion
 
+    }
+
+    static void Read()
+    {
+        // Wait until Write method signals
+        signal.WaitOne();
+        // Enter read lock
+        _rw.EnterReadLock();
+        try
+        {
+            // (It's safe for this thread to read from sharedResource)
+            Console.WriteLine("reads resource value " + resource);
+        }
+        finally
+        {
+            // Ensure that the lock is released.
+            _rw.ExitReadLock();
+        }
+    }
+
+    static void Write()
+    {
+        // Enter upgradeable lock
+        _rw.EnterUpgradeableReadLock();
+        try
+        {
+            // It's safe for this thread to read from sharedResource
+            Console.WriteLine("reads resource value " + resource);
+            // Enter write lock
+            _rw.EnterWriteLock();
+            try
+            {
+                // It's safe for this thread to write to sharedResource
+                resource = 123;
+                Console.WriteLine("writes resource value " + resource);
+            }
+            finally
+            {
+                // Ensure that the lock is released.
+                _rw.ExitWriteLock();
+            }
+        }
+        finally
+        {
+            // Ensure that the lock is released.
+            _rw.ExitUpgradeableReadLock();
+            // Signal the Read method to proceed
+            signal.Set();
+        }
     }
 
     private static void SemaphoreWorker(object num)
