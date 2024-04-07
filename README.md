@@ -2,4 +2,5 @@
 
 ### Examples
 
-- [Use of Delegates](https://www.example.com](https://github.com/lijotech/CSharpCodeExamples/tree/main/DelegatesInCSharp)https://github.com/lijotech/CSharpCodeExamples/tree/main/DelegatesInCSharp)
+- [Use of Delegates](https://github.com/lijotech/CSharpCodeExamples/tree/main/DelegatesInCSharp)
+- [Thread Synchronization](https://github.com/lijotech/CSharpCodeExamples/tree/main/ThreadSynchronizationInCSharp)
