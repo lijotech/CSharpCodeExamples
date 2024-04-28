@@ -9,6 +9,27 @@ namespace UseOfIValidatableObjectInCSharp
         {
             services.AddControllers();
             services.AddEndpointsApiExplorer();
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.InvalidModelStateResponseFactory = actionContext =>
+                {
+                    var errors = actionContext.ModelState
+                        .Where(e => e.Value?.Errors.Count > 0)
+                        .Select(e => new
+                        {
+                            Name = e.Key,
+                            Errors = e.Value?.Errors.Select(er => er.ErrorMessage).ToArray()
+                        }).ToArray();
+
+                    var response = new
+                    {
+                        Message = "Validation errors occurred",
+                        Success = false,
+                        Errors = errors
+                    };
+                    return new BadRequestObjectResult(response);
+                };
+            });
             services.AddSwaggerGen();
             services.AddScoped<IRepositoryService, RepositoryService>();
         }
@@ -69,18 +90,18 @@ namespace UseOfIValidatableObjectInCSharp
                 var addr = new System.Net.Mail.MailAddress(Email);
                 if (addr.Address != Email.Trim())
                 {
-                    results.Add(new ValidationResult("Invalid email format."));
+                    results.Add(new ValidationResult("Invalid email format.", [nameof(Email)]));
                 }
             }
             catch
             {
-                results.Add(new ValidationResult("Invalid email format."));
+                results.Add(new ValidationResult("Invalid email format.", [nameof(Email)]));
             }
 
             // Custom validation for telephone prefix
             if (!Telephone.StartsWith("+1"))
             {
-                results.Add(new ValidationResult("Telephone number must start with '+1'."));
+                results.Add(new ValidationResult("Telephone number must start with '+1'.", [nameof(Telephone)]));
             }
 
             // Validate DocumentList
@@ -88,12 +109,12 @@ namespace UseOfIValidatableObjectInCSharp
             {
                 if (document.ExpiryDate <= document.CreatedDate)
                 {
-                    results.Add(new ValidationResult($"The document {document.DocumentName} has an expiry date that is not greater than the created date."));
+                    results.Add(new ValidationResult($"The document at index {DocumentList.IndexOf(document)} with name '{document.DocumentName}' has an expiry date that is not greater than the created date.", ["DocumentList"]));
                 }
 
                 if (document.CreatedDate > DateTime.Now)
                 {
-                    results.Add(new ValidationResult($"The document {document.DocumentName} has a created date that is in the future."));
+                    results.Add(new ValidationResult($"The document at index {DocumentList.IndexOf(document)} with name '{document.DocumentName}' has a created date that is in the future.", ["DocumentList"]));
                 }
             }
 
@@ -103,7 +124,7 @@ namespace UseOfIValidatableObjectInCSharp
             // Check if email is already present in the database
             if (repositoryService.IsEmailPresent(Email))
             {
-                results.Add(new ValidationResult("Email is already present in the database."));
+                results.Add(new ValidationResult("Email is already present in the database.", [nameof(Email)]));
             }
 
             return results;
