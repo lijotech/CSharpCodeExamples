@@ -42,16 +42,42 @@ namespace UseOfFeatureManagement.Controller
             }
         }
 
-        [HttpGet("CustomLanguageFilter")]
-        public async Task<IActionResult> CustomFilter()
+        [HttpGet("CustomLanguageFeature")]
+        public async Task<IActionResult> GetCustomFeature()
         {
-            if (await _featureManager.IsEnabledAsync("CustomLanguageFilter"))
+            if (await _featureManager.IsEnabledAsync("CustomLanguageFeature"))
             {
-                return Ok("Custom Language Filter enabled");
+                return Ok("Custom Language feature enabled");
             }
             else
             {
-                return BadRequest("Custom Language Filter not enabled");
+                return BadRequest("Custom Language feature is disabled");
+            }
+        }
+
+        [HttpGet("TimeWindowFeature")]
+        public async Task<IActionResult> GetTimeWindowFilter()
+        {
+            if (await _featureManager.IsEnabledAsync("TimeWindowFeature"))
+            {
+                return Ok("Time Window feature enabled");
+            }
+            else
+            {
+                return BadRequest("Time Window feature is disabled");
+            }
+        }
+
+        [HttpGet("TargetingFeature")]
+        public async Task<IActionResult> GetTargetingFeature()
+        {
+            if (await _featureManager.IsEnabledAsync("TargetingFeature"))
+            {
+                return Ok("Targeting feature is enabled");
+            }
+            else
+            {
+                return BadRequest("Targeting feature is disabled");
             }
         }
     }

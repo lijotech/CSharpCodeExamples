@@ -15,10 +15,10 @@ namespace UseOfFeatureManagement
         {
             services.AddControllers();
             services.AddSwaggerGen();
-            services.AddFeatureManagement()
-                .AddFeatureFilter<PercentageFilter>()
-                .AddFeatureFilter<LanguageFilter>();
+
             services.AddHttpContextAccessor();
+            services.AddSingleton<ITargetingContextAccessor, CustomTargetingContextAccessor>();
+            services.AddFeatureManagement().AddFeatureFilter<LanguageFilter>().AddFeatureFilter<TargetingFilter>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -4,3 +4,23 @@ GET {{UseOfFeatureManagement_HostAddress}}/BooleanFeature/
 Accept: application/json
 
 ###
+
+GET {{UseOfFeatureManagement_HostAddress}}/PercentageFeature/
+Accept: application/json
+
+###
+
+GET {{UseOfFeatureManagement_HostAddress}}/CustomLanguageFeature/
+Accept: application/json
+
+###
+
+GET {{UseOfFeatureManagement_HostAddress}}/TimeWindowFeature/
+Accept: application/json
+
+###
+
+GET {{UseOfFeatureManagement_HostAddress}}/TargetingFeature/
+Accept: application/json
+
+###
