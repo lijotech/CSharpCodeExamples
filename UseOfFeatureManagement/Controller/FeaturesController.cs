@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.FeatureManagement;
+using Microsoft.FeatureManagement.Mvc;
 
 namespace UseOfFeatureManagement.Controller
 {
@@ -14,7 +15,6 @@ namespace UseOfFeatureManagement.Controller
             _featureManager = featureManager;
         }
 
-        // Endpoint for BooleanFilter
         [HttpGet("BooleanFeature")]
         public async Task<IActionResult> GetBooleanFeature()
         {
@@ -28,7 +28,6 @@ namespace UseOfFeatureManagement.Controller
             }
         }
 
-        // Endpoint for PercentageFilter
         [HttpGet("PercentageFeature")]
         public async Task<IActionResult> GetPercentageFeature()
         {
@@ -79,6 +78,13 @@ namespace UseOfFeatureManagement.Controller
             {
                 return BadRequest("Targeting feature is disabled");
             }
+        }
+
+        [HttpGet("BooleanFeatureUsingFeatureGate")]
+        [FeatureGate("BooleanFeature")]
+        public async Task<IActionResult> GetBooleanFeatureUsingFeatureGate()
+        {
+            return Ok("Boolean feature is enabled");
         }
     }
 }
