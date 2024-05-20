@@ -1,4 +1,5 @@
 ﻿using Microsoft.FeatureManagement;
+using Microsoft.FeatureManagement.FeatureFilters;
 
 namespace UseOfFeatureManagement
 {
@@ -14,7 +15,8 @@ namespace UseOfFeatureManagement
         {
             services.AddControllers();
             services.AddSwaggerGen();
-            services.AddFeatureManagement();
+            services.AddFeatureManagement()
+                .AddFeatureFilter<PercentageFilter>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

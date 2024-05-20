@@ -27,5 +27,19 @@ namespace UseOfFeatureManagement.Controller
                 return BadRequest("Boolean feature is disabled");
             }
         }
+
+        // Endpoint for PercentageFilter
+        [HttpGet("PercentageFeature")]
+        public async Task<IActionResult> GetPercentageFeature()
+        {
+            if (await _featureManager.IsEnabledAsync("PercentageFeature"))
+            {
+                return Ok("Percentage feature is enabled");
+            }
+            else
+            {
+                return BadRequest("Percentage feature is disabled");
+            }
+        }
     }
 }
