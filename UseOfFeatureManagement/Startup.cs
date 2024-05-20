@@ -16,7 +16,9 @@ namespace UseOfFeatureManagement
             services.AddControllers();
             services.AddSwaggerGen();
             services.AddFeatureManagement()
-                .AddFeatureFilter<PercentageFilter>();
+                .AddFeatureFilter<PercentageFilter>()
+                .AddFeatureFilter<LanguageFilter>();
+            services.AddHttpContextAccessor();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

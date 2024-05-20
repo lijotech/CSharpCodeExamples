@@ -41,5 +41,18 @@ namespace UseOfFeatureManagement.Controller
                 return BadRequest("Percentage feature is disabled");
             }
         }
+
+        [HttpGet("CustomLanguageFilter")]
+        public async Task<IActionResult> CustomFilter()
+        {
+            if (await _featureManager.IsEnabledAsync("CustomLanguageFilter"))
+            {
+                return Ok("Custom Language Filter enabled");
+            }
+            else
+            {
+                return BadRequest("Custom Language Filter not enabled");
+            }
+        }
     }
 }
