@@ -1,0 +1,6 @@
+@UseOfFeatureManagement_HostAddress = http://localhost:5219/api/Features
+
+GET {{UseOfFeatureManagement_HostAddress}}/BooleanFeature/
+Accept: application/json
+
+###
