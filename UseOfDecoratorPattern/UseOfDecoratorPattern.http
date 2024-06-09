@@ -1,0 +1,6 @@
+@UseOfDecoratorPattern_HostAddress = http://localhost:5025
+
+GET {{UseOfDecoratorPattern_HostAddress}}/GetData/
+Accept: application/json
+
+###
