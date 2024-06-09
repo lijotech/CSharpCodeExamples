@@ -18,6 +18,7 @@ namespace UseOfDecoratorPattern
             services.AddSwaggerGen();
             services.AddMemoryCache();
 
+            services.AddSingleton<ICircuitBreaker, CircuitBreaker>();
             services.AddScoped(serviceProvider =>
             {
                 var logger = serviceProvider.GetService<ILogger<LoggingDataService>>();
@@ -28,6 +29,17 @@ namespace UseOfDecoratorPattern
                 IDataService loggingDecorator = new LoggingDataService(cachingDecorator, logger);
 
                 return loggingDecorator;
+            });
+
+            services.AddScoped(serviceProvider =>
+            {
+                var circuitBreaker = serviceProvider.GetService<ICircuitBreaker>();
+
+                IExternalDataService concreteService = new ExternalDataService();
+                IExternalDataService circuitBreakerDecorator = new CircuitBreakerDataService(concreteService, circuitBreaker);
+
+                //if we want to exclude circuit breaking then replace the below with `concreteService` 
+                return circuitBreakerDecorator;
             });
         }
 
