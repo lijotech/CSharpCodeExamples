@@ -1,6 +1,12 @@
 ﻿## Decorator Pattern 
 The decorator pattern is a design pattern used in object-oriented programming. It allows behavior to be added to an individual object, either statically or dynamically, without affecting the behavior of other objects from the same class. This is achieved by designing a new decorator class that wraps the original class.
 
+## Use Cases
+
+ - Execution Policies: You can use decorators to handle execution policies such as exception handling, retrying, or caching. For example, you might want to add retry logic to an API call without modifying the core functionality.
+ - Observability: By adding decorators, you can enhance observability. For instance, you could log all calls to an external component by wrapping it with a logging decorator.
+ - User Interface Enhancement: Decorators are useful for enhancing user interfaces. Imagine adding a scrollbar to a large textbox or customizing UI elements dynamically.
+
 ## Here are some more real-world scenarios where the decorator pattern can be used in ASP.NET Core web applications:
 
  - Logging: You can use the decorator pattern to add logging to services in your application. For example, you could create a `LoggingService` that logs each method call and then passes the call onto the decorated service.
