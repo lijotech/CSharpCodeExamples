@@ -9,3 +9,4 @@
 - [Use of Feature Management](https://github.com/lijotech/CSharpCodeExamples/tree/main/UseOfFeatureManagement)
 - [Use of Decorator Pattern](https://github.com/lijotech/CSharpCodeExamples/tree/main/UseOfDecoratorPattern)
 - [Use of Singleton Pattern](https://github.com/lijotech/CSharpCodeExamples/tree/main/UseOfSingletonPattern)
+- [Use of Factory Pattern](https://github.com/lijotech/CSharpCodeExamples/tree/main/UseOfFactoryPattern)
