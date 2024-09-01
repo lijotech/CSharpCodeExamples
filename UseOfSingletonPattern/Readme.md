@@ -34,5 +34,5 @@ In this example:
 - Example: Utility classes with stateless functions or constants (e.g., Math, File, Console).
 
 > ### Brief usage scenarios analysis:
->  Use a `Singleton` if you need object-oriented features, state management, and flexibility.
->  Use a `static class` for simple, stateless functions or global constants.
+>  - Use a `Singleton` if you need object-oriented features, state management, and flexibility.
+>  - Use a `static class` for simple, stateless functions or global constants.
