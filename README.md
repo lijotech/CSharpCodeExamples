@@ -10,3 +10,4 @@
 - [Use of Decorator Pattern](https://github.com/lijotech/CSharpCodeExamples/tree/main/UseOfDecoratorPattern)
 - [Use of Singleton Pattern](https://github.com/lijotech/CSharpCodeExamples/tree/main/UseOfSingletonPattern)
 - [Use of Factory Pattern](https://github.com/lijotech/CSharpCodeExamples/tree/main/UseOfFactoryPattern)
+- [Extend Factory Pattern using DI](https://github.com/lijotech/CSharpCodeExamples/tree/main/ExtendFactoryPatternUsingDI)
