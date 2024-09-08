@@ -1,9 +1,8 @@
-﻿using ExtendFactoryPatternUsingDI.Interface;
+﻿using ExtendFactoryPatternUsingDI.Enums;
+using ExtendFactoryPatternUsingDI.Interface;
 using ExtendFactoryPatternUsingDI.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
-using System;
 
 namespace ExtendFactoryPatternUsingDI
 {
@@ -23,8 +22,13 @@ namespace ExtendFactoryPatternUsingDI
                 Console.WriteLine(serviceFactory.Generate());
 
                 var vehicleFactory = host.Services.GetService<IVehicleFactory>()!;
-                Console.WriteLine("Car design generated using factory instance using condition.");
+                Console.WriteLine("Car design generated using factory instance with conditional object instantiation.");
                 vehicleFactory.CreateVehicle(VehicleType.Car).Design();
+
+                var maintanceFactory = host.Services.GetService<MaintanceServiceFactory>()!;
+                Console.WriteLine("Maintance info generated using conditional service resolution.");
+                Console.WriteLine(maintanceFactory.GetMaintanceService(MaintanceMode.Test).Perform("Demo"));
+
             }
             catch (Exception ex)
             {
@@ -44,6 +48,12 @@ namespace ExtendFactoryPatternUsingDI
             // Register your services here
             services.AddSingleton<IPrefixGenService, PrefixGenService>();
             services.AddTransient<IVehicleFactory, VehicleFactory>();
+
+            services.AddTransient<IMaintanceService, LiveMaintanceService>();
+            services.AddTransient<IMaintanceService, TestMaintanceService>();
+            services.AddTransient<IMaintanceService, OfflineMaintanceService>();
+            services.AddSingleton<MaintanceServiceFactory>();
+
             services.AddSingleton<LabelGenServiceFactory>();
             services.AddSingleton<VinLabelGenService>(serviceProvider =>
             {
@@ -73,5 +83,24 @@ namespace ExtendFactoryPatternUsingDI
 
         public override void Design() => Console.WriteLine($"Designing a truck with vin {_vinLabel}...");
         public override void Manufacture() => Console.WriteLine("Manufacturing a truck...");
+    }
+
+    //Maintance services
+    public class LiveMaintanceService : IMaintanceService
+    {
+        public MaintanceMode Mode => MaintanceMode.Live;
+        public string Perform(string message) => $"Live: {message}";
+    }
+
+    public class TestMaintanceService : IMaintanceService
+    {
+        public MaintanceMode Mode => MaintanceMode.Test;
+        public string Perform(string message) => $"Test: {message}";
+    }
+
+    public class OfflineMaintanceService : IMaintanceService
+    {
+        public MaintanceMode Mode => MaintanceMode.Offline;
+        public string Perform(string message) => $"Offline: {message}";
     }
 }
