@@ -1,8 +1,8 @@
 ﻿namespace ExtendFactoryPatternUsingDI.Interface
 {
-    public interface IVehicle
+    public abstract class Vehicle(string vinLabel)
     {
-        void Design();
-        void Manufacture();
+        public abstract void Design();
+        public abstract void Manufacture();
     }
 }

@@ -3,6 +3,7 @@ using ExtendFactoryPatternUsingDI.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using System;
 
 namespace ExtendFactoryPatternUsingDI
 {
@@ -20,6 +21,10 @@ namespace ExtendFactoryPatternUsingDI
                 var serviceFactory = host.Services.GetService<LabelGenServiceFactory>()!.GetVinLabelGenService();
                 Console.WriteLine("Vin label generated using factory instance.");
                 Console.WriteLine(serviceFactory.Generate());
+
+                var vehicleFactory = host.Services.GetService<IVehicleFactory>()!;
+                Console.WriteLine("Car design generated using factory instance using condition.");
+                vehicleFactory.CreateVehicle(VehicleType.Car).Design();
             }
             catch (Exception ex)
             {
@@ -38,6 +43,7 @@ namespace ExtendFactoryPatternUsingDI
         {
             // Register your services here
             services.AddSingleton<IPrefixGenService, PrefixGenService>();
+            services.AddTransient<IVehicleFactory, VehicleFactory>();
             services.AddSingleton<LabelGenServiceFactory>();
             services.AddSingleton<VinLabelGenService>(serviceProvider =>
             {
@@ -47,33 +53,25 @@ namespace ExtendFactoryPatternUsingDI
     }
 
     //Models
-    public class Car : IVehicle
+    public class Car(string vinLabel) : Vehicle(vinLabel)
     {
-        public void Design() => Console.WriteLine("Designing a car...");
-        public void Manufacture() => Console.WriteLine("Manufacturing a car...");
-    }
-    public class Bike : IVehicle
-    {
-        public void Design() => Console.WriteLine("Designing a bike...");
-        public void Manufacture() => Console.WriteLine("Manufacturing a bike...");
-    }
-    public class Truck : IVehicle
-    {
-        public void Design() => Console.WriteLine("Designing a truck...");
-        public void Manufacture() => Console.WriteLine("Manufacturing a truck...");
-    }
+        private readonly string _vinLabel = vinLabel;
 
-    //Factories
-    public class CarFactory : IVehicleFactory
-    {
-        public IVehicle CreateVehicle() => new Car();
+        public override void Design() => Console.WriteLine($"Designing a car with vin {_vinLabel}...");
+        public override void Manufacture() => Console.WriteLine("Manufacturing a car...");
     }
-    public class BikeFactory : IVehicleFactory
+    public class Bike(string vinLabel) : Vehicle(vinLabel)
     {
-        public IVehicle CreateVehicle() => new Bike();
+        private readonly string _vinLabel = vinLabel;
+
+        public override void Design() => Console.WriteLine($"Designing a bike with vin {_vinLabel}...");
+        public override void Manufacture() => Console.WriteLine("Manufacturing a bike...");
     }
-    public class TruckFactory : IVehicleFactory
+    public class Truck(string vinLabel) : Vehicle(vinLabel)
     {
-        public IVehicle CreateVehicle() => new Truck();
+        private readonly string _vinLabel = vinLabel;
+
+        public override void Design() => Console.WriteLine($"Designing a truck with vin {_vinLabel}...");
+        public override void Manufacture() => Console.WriteLine("Manufacturing a truck...");
     }
 }

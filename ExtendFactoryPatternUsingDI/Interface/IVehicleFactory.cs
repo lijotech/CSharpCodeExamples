@@ -2,6 +2,6 @@
 {
     public interface IVehicleFactory
     {
-        IVehicle CreateVehicle();
+        Vehicle CreateVehicle(VehicleType vehicleType);
     }
 }
