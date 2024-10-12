@@ -20,11 +20,46 @@ The fluent method calls work irrespective of the order because each method retur
 	- ComputerStorageBuilder<T>: Adds the SetStorage method.
 * __Director Class__ (ComputerBuilderDirector): Inherits from the most derived builder class (ComputerStorageBuilder<ComputerBuilderDirector>) to provide a complete set of builder methods.
 
-This pattern ensures that you can chain methods in any order to build a Computer object with all necessary attributes. The use of recursive generics allows each method to return the correct type, enabling fluent method chaining.
-
-### Summary
 - Recursive Generics: Ensure that each method returns the correct type for chaining.
 - Fluent Interface: Allows methods to be called in any order, as long as they are defined in the builder classes.
 - Builder Pattern: Separates the construction of a complex object from its representation, making the code more readable and maintainable.
 
-- This pattern is particularly useful for creating complex objects with many optional parameters, providing a clear and flexible way to construct objects step by step.
+### Advantages
+- Fluent Interface: Allows for intuitive and readable method chaining.
+- Type Safety: Ensures that each method returns the correct type, preventing runtime errors.
+- Flexibility: Methods can be called in any order, making the builder flexible.
+
+### Disadvantages
+- Complexity: The use of recursive generics can be difficult to understand and implement.
+- Verbosity: Requires multiple builder classes, which can lead to more verbose code.
+
+
+### Usage Scenarios
+- When you need to build complex objects with many optional parameters.
+- When you want to ensure type safety and provide a fluent interface for object construction.
+ 
+---
+ 
+## Faceted Builder
+
+The Faceted Builder pattern uses multiple builder classes to construct different aspects (facets) of an object. This pattern is useful when an object has multiple parts that can be built independently.
+
+### Advantages
+
+- Separation of Concerns: Different aspects of the object are built by different builders, making the code more modular and maintainable.
+- Clarity: Each builder class has a clear responsibility, making the code easier to understand.
+
+### Disadvantages
+
+- Coordination: Requires coordination between multiple builder classes, which can add complexity.
+- Overhead: May introduce additional overhead due to the need for multiple builder classes.
+
+### Usage Scenarios
+- When an object has multiple independent parts that need to be built separately.
+- When you want to separate the construction logic for different aspects of an object to improve modularity and maintainability.
+
+### Summary
+- `Recursive Builder`: Best for building complex objects with many optional parameters, providing a fluent interface and ensuring type safety.
+- `Faceted Builder`: Best for building objects with multiple independent parts, improving modularity and separation of concerns.
+
+- Both patterns have their own strengths and are suitable for different scenarios. The choice between them depends on the specific requirements of your object construction process.
