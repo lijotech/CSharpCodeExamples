@@ -1,4 +1,4 @@
-﻿namespace ExtendBuilderDesignPattern
+﻿namespace ExtendBuilderDesignPattern.RecursiveBuilder
 {
     public class ComputerRAMBuilder<T> : ComputerGPUBuilder<ComputerRAMBuilder<T>> where T : ComputerRAMBuilder<T>
     {
@@ -6,6 +6,6 @@
         {
             computer.RAM = ram;
             return (T)this;
-        }
+        }    
     }
 }

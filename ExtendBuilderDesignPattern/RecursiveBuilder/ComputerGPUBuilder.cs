@@ -1,4 +1,4 @@
-﻿namespace ExtendBuilderDesignPattern
+﻿namespace ExtendBuilderDesignPattern.RecursiveBuilder
 {
     public class ComputerGPUBuilder<T> : ComputerCPUBuilder<ComputerGPUBuilder<T>> where T : ComputerGPUBuilder<T>
     {

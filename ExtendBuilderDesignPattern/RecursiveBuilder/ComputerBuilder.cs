@@ -1,4 +1,4 @@
-﻿namespace ExtendBuilderDesignPattern
+﻿namespace ExtendBuilderDesignPattern.RecursiveBuilder
 {
     public abstract class ComputerBuilder
     {
