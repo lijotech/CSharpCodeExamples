@@ -103,3 +103,25 @@ HomeExitMode(): Turns off the lights and stops playing music.
 Usage: In the Main method, we create an instance of HomeFacade and use its methods to control the subsystems without interacting with them directly.
 
 By using the Facade pattern, we encapsulate the complexities of the subsystems and provide a simple and easy-to-use interface to the client. This enhances code readability, reduces dependencies, and improves maintenance.
+
+## Facade pattern using delegates
+
+We can enhance the Facade pattern using delegates in C#. Delegates are useful for defining callback methods or events that you want the Facade to handle. This adds a layer of flexibility to the pattern by allowing the client to provide custom behavior without modifying the facade.
+
+Let's extend the Home Automation System example to include delegates:
+
+
+Explanation
+Subsystem Classes: Remain unchanged with Light, MusicSystem, and AirConditioner.
+
+Facade Class with Delegates:
+
+Delegates and Events: CustomEntryAction and CustomExitAction are delegates that define custom actions. The OnEntry and OnExit events are used to subscribe to these actions.
+
+HomeEntryMode() and HomeExitMode(): These methods now invoke custom actions through the OnEntry and OnExit events.
+
+Usage with Delegates:
+
+Subscribing to Events: In the Main method, custom actions are subscribed to the OnEntry and OnExit events. These actions will be executed when the respective methods are called.
+
+Using delegates in the Facade pattern allows for additional customization and flexibility without changing the Facade class itself. The client can define and attach custom behaviors, enhancing the functionality as needed.

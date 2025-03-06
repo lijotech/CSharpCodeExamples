@@ -11,6 +11,22 @@ class Program
 
         // Exiting home
         homeFacade.HomeExitMode();
+
+        Console.WriteLine();
+
+        HomeFacadeWithDelegate homeFacadeWithDelegate = new HomeFacadeWithDelegate();
+
+        // Subscribe to entry event with a custom action
+        homeFacadeWithDelegate.OnEntry += () => Console.WriteLine("Custom action: Welcome home!");
+
+        // Subscribe to exit event with a custom action
+        homeFacadeWithDelegate.OnExit += () => Console.WriteLine("Custom action: Goodbye!");
+
+        // Entering home
+        homeFacadeWithDelegate.HomeEntryMode();
+
+        // Exiting home
+        homeFacadeWithDelegate.HomeExitMode();
     }
 }
 
