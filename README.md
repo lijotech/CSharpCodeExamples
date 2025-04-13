@@ -12,3 +12,6 @@
 - [Extend Factory Pattern using DI](https://github.com/lijotech/CSharpCodeExamples/tree/main/ExtendFactoryPatternUsingDI)
 - [Use of Builder Design Pattern](https://github.com/lijotech/CSharpCodeExamples/tree/main/UseOfBuilderDesignPattern)
 - [Extend Builder Design Pattern](https://github.com/lijotech/CSharpCodeExamples/tree/main/ExtendBuilderDesignPattern)
+- [Use of Adapter Design Pattern](https://github.com/lijotech/CSharpCodeExamples/tree/main/UseOfAdapterDesignPattern)
+- [Use of Composite Design Pattern](https://github.com/lijotech/CSharpCodeExamples/tree/main/UseOfCompositeDesignPattern)
+- [Use of Facade Design Pattern](https://github.com/lijotech/CSharpCodeExamples/tree/main/UseOfFacadeDesignPattern)
