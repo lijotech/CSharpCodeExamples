@@ -6,16 +6,16 @@ public class Program
     {
         Light livingRoomLight = new Light();
 
-        ICommand lightCommand = new LightCommand(livingRoomLight,Mode.ON);    
-
         RemoteControl remoteControl = new RemoteControl();
 
         // Execute commands
-        remoteControl.Invoke(lightCommand);
+        remoteControl.Invoke(new LightCommand(livingRoomLight, Mode.ON));
         remoteControl.Invoke(new LightCommand(livingRoomLight, Mode.OFF));
 
         // Undo commands
         remoteControl.Undo();
+        remoteControl.Undo();
+        //show command history is empty
         remoteControl.Undo();
     }
 }
