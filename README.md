@@ -15,3 +15,4 @@
 - [Use of Adapter Design Pattern](https://github.com/lijotech/CSharpCodeExamples/tree/main/UseOfAdapterDesignPattern)
 - [Use of Composite Design Pattern](https://github.com/lijotech/CSharpCodeExamples/tree/main/UseOfCompositeDesignPattern)
 - [Use of Facade Design Pattern](https://github.com/lijotech/CSharpCodeExamples/tree/main/UseOfFacadeDesignPattern)
+- [Use of Command Design Pattern](https://github.com/lijotech/CSharpCodeExamples/tree/main/UseOfCommandDesignPattern)
