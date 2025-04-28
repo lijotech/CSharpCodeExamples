@@ -11,10 +11,12 @@ class Program
         };
 
         DiscountVisitor discountVisitor = new DiscountVisitor();
+        TaxVisitor taxVisitor = new TaxVisitor();
 
         foreach (var item in items)
         {
             item.Accept(discountVisitor);
+            item.Accept(taxVisitor);
         }
     }
 }
